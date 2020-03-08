@@ -1,0 +1,76 @@
+
+metadata <- read.csv("C:/Users/falk/Google Drive/PhD/PhD Projects/Blue Steel/Paper#2/Cluster_Summary/Cluster_metadata.csv")
+Day9_metadata <- metadata %>% filter(Day == "9")
+
+together <- left_join(Day9_data,Day9_metadata[,c(1:ncol(Day9_metadata))], "Entry")
+colnames(together)
+together$snp35k.8 <- as.character(together$snp35k.8) 
+together %>% dplyr::select(snp35k.8,TRL,PRL,WID,CVA,LRB,VOL,LRA,SOL2,LED,RHZO,TRL_GR,TRLUpper,Root_weight) %>% filter(snp35k.8=="1") %>% dplyr::summarize(Mean = mean(snp35k.8))
+str(snp35kSummary)
+together %>% dplyr::select(snp35k.8,TRL) %>% group_by(snp35k.8)%>% dplyr::summarize(Mean = mean(TRL))
+snp35kSummary %>% dplyr::summarize(Mean = mean(snp35k.8))
+write.csv(snp35kSummary,"C:/Users/falk/Google Drive/PhD/PhD Projects/Blue Steel/Paper#2/Drafts/snp35kSummary.csv")
+
+BestGenotype_snp35k <- together %>% select(snp35k.8,BestGenotype) %>% group_by(snp35k.8) %>% dplyr::summarize(Mean = mean(BestGenotype))
+DT_snp35k <- together %>% select(snp35k.8,DT) %>% group_by(snp35k.8) %>% dplyr::summarize(Mean = mean(DT))
+Scavenger_snp35k <- together %>% select(snp35k.8,Scavenger) %>% group_by(snp35k.8) %>% dplyr::summarize(Mean = mean(Scavenger))
+Umbrella_snp35k <- together %>% select(snp35k.8,Umbrella) %>% group_by(snp35k.8) %>% dplyr::summarize(Mean = mean(Umbrella))
+Beard_snp35k <- together %>% select(snp35k.8,Beard) %>% group_by(snp35k.8) %>% dplyr::summarize(Mean = mean(Beard))
+
+iRoot_snp35k <- cbind(BestGenotype_snp35k,DT_snp35k[2],Scavenger_snp35k[2],Umbrella_snp35k[2],Beard_snp35k[2])
+colnames(iRoot_snp35k) <- c("snp35k", "Best","DT", "Scavenger","Umbrella","Beard")
+
+write.csv(iRoot_snp35k,"C:/Users/falk/Google Drive/PhD/PhD Projects/Blue Steel/Paper#2/Drafts/iRoot_snp35k.csv")
+
+str(together)
+BestGenotype_Phenotraits13_complete <- together %>% select(Phenotraits13_complete,BestGenotype) %>% group_by(Phenotraits13_complete) %>% dplyr::summarize(Mean = mean(BestGenotype))
+DT_Phenotraits13_complete <- together %>% select(Phenotraits13_complete,DT) %>% group_by(Phenotraits13_complete) %>% dplyr::summarize(Mean = mean(DT))
+Scavenger_Phenotraits13_complete <- together %>% select(Phenotraits13_complete,Scavenger) %>% group_by(Phenotraits13_complete) %>% dplyr::summarize(Mean = mean(Scavenger))
+Umbrella_Phenotraits13_complete <- together %>% select(Phenotraits13_complete,Umbrella) %>% group_by(Phenotraits13_complete) %>% dplyr::summarize(Mean = mean(Umbrella))
+Beard_Phenotraits13_complete <- together %>% select(Phenotraits13_complete,Beard) %>% group_by(Phenotraits13_complete) %>% dplyr::summarize(Mean = mean(Beard))
+
+iRoot_Phenotraits13_complete <- cbind(BestGenotype_Phenotraits13_complete,DT_Phenotraits13_complete[2],Scavenger_Phenotraits13_complete[2],Umbrella_Phenotraits13_complete[2],Beard_Phenotraits13_complete[2])
+colnames(iRoot_Phenotraits13_complete) <- c("Phenotraits13_complete", "Best","DT", "Scavenger","Umbrella","Beard")
+
+write.csv(iRoot_Phenotraits13_complete,"C:/Users/falk/Google Drive/PhD/PhD Projects/Blue Steel/Paper#2/Drafts/iRoot_Phenotraits13_complete.csv")
+
+phenoCountry <- together %>% select(Phenotraits13_complete,Country.y) %>% table()
+together %>% select(Country.y,Phenotraits13_complete) %>% group_by(Country.y) %>% dplyr::summarize(Mean = mean(Phenotraits13_complete))
+
+snp35kTRL <- together %>% dplyr::select(snp35k.8,TRL) %>% group_by(snp35k.8) %>%  dplyr::summarize(TRL = mean(TRL,na.rm = TRUE))
+snp35kPRL <- together %>% dplyr::select(snp35k.8,PRL) %>% group_by(snp35k.8) %>%  dplyr::summarize(PRL = mean(PRL,na.rm = TRUE))
+snp35kWID <- together %>% dplyr::select(snp35k.8,WID) %>% group_by(snp35k.8) %>%  dplyr::summarize(WID = mean(WID,na.rm = TRUE))
+snp35kCVA <- together %>% dplyr::select(snp35k.8,CVA) %>% group_by(snp35k.8) %>%  dplyr::summarize(CVA = mean(CVA,na.rm = TRUE))
+snp35kLRB <- together %>% dplyr::select(snp35k.8,LRB) %>% group_by(snp35k.8) %>%  dplyr::summarize(LRB = mean(LRB,na.rm = TRUE))
+snp35kVOL <- together %>% dplyr::select(snp35k.8,VOL) %>% group_by(snp35k.8) %>%  dplyr::summarize(VOL = mean(VOL,na.rm = TRUE))
+snp35kLRA <- together %>% dplyr::select(snp35k.8,LRA) %>% group_by(snp35k.8) %>%  dplyr::summarize(LRA = mean(LRA,na.rm = TRUE))
+snp35kSOL2 <- together %>% dplyr::select(snp35k.8,SOL2) %>% group_by(snp35k.8) %>%  dplyr::summarize(SOL2 = mean(SOL2,na.rm = TRUE))
+snp35kLED <- together %>% dplyr::select(snp35k.8,LED) %>% group_by(snp35k.8) %>%  dplyr::summarize(LED = mean(LED,na.rm = TRUE))
+snp35kRHZO <- together %>% dplyr::select(snp35k.8,RHZO) %>% group_by(snp35k.8) %>%  dplyr::summarize(RHZO = mean(RHZO,na.rm = TRUE))
+snp35kTRL_GR <- together %>% dplyr::select(snp35k.8,TRL_GR) %>% group_by(snp35k.8) %>%  dplyr::summarize(TRL_GR = mean(TRL_GR,na.rm = TRUE))
+snp35kTRLUpper <- together %>% dplyr::select(snp35k.8,TRLUpper) %>% group_by(snp35k.8) %>%  dplyr::summarize(TRLUpper = mean(TRLUpper,na.rm = TRUE))
+snp35kRoot_weight <- together %>% dplyr::select(snp35k.8,Root_weight) %>% group_by(snp35k.8) %>%  dplyr::summarize(Root_weight = mean(Root_weight,na.rm = TRUE))
+
+blah <- cbind(snp35kTRL,snp35kPRL,snp35kWID,snp35kCVA,snp35kLRB,snp35kVOL,snp35kLRA,snp35kSOL2,snp35kLED,snp35kRHZO,snp35kTRL_GR,snp35kTRLUpper,snp35kRoot_weight)
+write.csv(blah,"C:/Users/falk/Google Drive/PhD/PhD Projects/Blue Steel/Paper#2/Drafts/snp35k_means.csv")
+colnames(together)
+together %>% select(MG.x,Shape.8.x) %>% table()
+
+Shape.8.xTRL <- together %>% dplyr::select(Shape.8.x,TRL) %>% group_by(Shape.8.x) %>%  dplyr::summarize(TRL = mean(TRL,na.rm = TRUE))
+Shape.8.xPRL <- together %>% dplyr::select(Shape.8.x,PRL) %>% group_by(Shape.8.x) %>%  dplyr::summarize(PRL = mean(PRL,na.rm = TRUE))
+Shape.8.xWID <- together %>% dplyr::select(Shape.8.x,WID) %>% group_by(Shape.8.x) %>%  dplyr::summarize(WID = mean(WID,na.rm = TRUE))
+Shape.8.xCVA <- together %>% dplyr::select(Shape.8.x,CVA) %>% group_by(Shape.8.x) %>%  dplyr::summarize(CVA = mean(CVA,na.rm = TRUE))
+Shape.8.xLRB <- together %>% dplyr::select(Shape.8.x,LRB) %>% group_by(Shape.8.x) %>%  dplyr::summarize(LRB = mean(LRB,na.rm = TRUE))
+Shape.8.xVOL <- together %>% dplyr::select(Shape.8.x,VOL) %>% group_by(Shape.8.x) %>%  dplyr::summarize(VOL = mean(VOL,na.rm = TRUE))
+Shape.8.xLRA <- together %>% dplyr::select(Shape.8.x,LRA) %>% group_by(Shape.8.x) %>%  dplyr::summarize(LRA = mean(LRA,na.rm = TRUE))
+Shape.8.xSOL2 <- together %>% dplyr::select(Shape.8.x,SOL2) %>% group_by(Shape.8.x) %>%  dplyr::summarize(SOL2 = mean(SOL2,na.rm = TRUE))
+Shape.8.xLED <- together %>% dplyr::select(Shape.8.x,LED) %>% group_by(Shape.8.x) %>%  dplyr::summarize(LED = mean(LED,na.rm = TRUE))
+Shape.8.xRHZO <- together %>% dplyr::select(Shape.8.x,RHZO) %>% group_by(Shape.8.x) %>%  dplyr::summarize(RHZO = mean(RHZO,na.rm = TRUE))
+Shape.8.xTRL_GR <- together %>% dplyr::select(Shape.8.x,TRL_GR) %>% group_by(Shape.8.x) %>%  dplyr::summarize(TRL_GR = mean(TRL_GR,na.rm = TRUE))
+Shape.8.xTRLUpper <- together %>% dplyr::select(Shape.8.x,TRLUpper) %>% group_by(Shape.8.x) %>%  dplyr::summarize(TRLUpper = mean(TRLUpper,na.rm = TRUE))
+Shape.8.xRoot_weight <- together %>% dplyr::select(Shape.8.x,Root_weight) %>% group_by(Shape.8.x) %>%  dplyr::summarize(Root_weight = mean(Root_weight,na.rm = TRUE))
+
+blah <- cbind(Shape.8.xTRL,Shape.8.xPRL,Shape.8.xWID,Shape.8.xCVA,Shape.8.xLRB,Shape.8.xVOL,Shape.8.xLRA,Shape.8.xSOL2,Shape.8.xLED,Shape.8.xRHZO,Shape.8.xTRL_GR,Shape.8.xTRLUpper,Shape.8.xRoot_weight)
+write.csv(blah,"C:/Users/falk/Google Drive/PhD/PhD Projects/Blue Steel/Paper#2/Drafts/Shape.8.x_means.csv")
+
+together %>% dplyr::select(Shape.8.x,Phenotraits13_complete) %>% group_by(Shape.8.x) %>% dplyr::summarize(Mean = mean(Phenotraits13_complete,na.rm = TRUE))
